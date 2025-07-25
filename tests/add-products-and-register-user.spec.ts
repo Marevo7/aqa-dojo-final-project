@@ -11,6 +11,14 @@ test(
 	'Add some products to basket and try to create new user',
 	{ tag: '@medium level' },
 	async ({ page }) => {
+		await page.setExtraHTTPHeaders({
+			Accept:
+				'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+			'Accept-Language': 'en-US,en;q=0.5',
+			'Accept-Encoding': 'gzip, deflate',
+			Connection: 'keep-alive',
+			'Upgrade-Insecure-Requests': '1',
+		})
 		const headerComponent = new HeaderComponents(page)
 		const searchComponent = new SearchComponent(page)
 		const search = new SearchResultPage(page)
@@ -18,7 +26,7 @@ test(
 		const registrationPage = new RegistrationPage(page)
 		const basketPage = new BasketPage(page)
 		const startPage = new StartPage(page)
-		await page.goto('https://www.zara.com/')
+		await page.goto('https://www.zara.com')
 		await startPage.acceptCookies()
 		await startPage.goToStore()
 		await headerComponent.goToSearchButton.click()
