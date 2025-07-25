@@ -44,6 +44,7 @@ test(
 				await search.addToBasketButton.nth(1).click()
 				await sizes[i].click()
 				await search.closeModalProductAddedToBasket()
+				await page.waitForTimeout(500)
 			}
 		} else {
 			console.log('Size are not found')
