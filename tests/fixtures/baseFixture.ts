@@ -1,11 +1,11 @@
 import { test as base } from '@playwright/test'
-import { RegistrationPage } from '../pages/RegistrationPage'
-import { BasketPage } from '../pages/BasketPage'
-import { StartPage } from '../pages/StartPage'
-import { SearchResultPage } from '../pages/SearchResultPage'
-import { SearchComponent } from '../components/SearchComponent'
-import { HeaderComponents } from '../components/HeaderComponents'
-import { ProductCartComponents } from '../components/ProductCartComponents'
+import { RegistrationPage } from '../../zara/pages/RegistrationPage'
+import { BasketPage } from '../../zara/pages/BasketPage'
+import { StartPage } from '../../zara/pages/StartPage'
+import { SearchResultPage } from '../../zara/pages/SearchResultPage'
+import { SearchComponent } from '../../zara/components/SearchComponent'
+import { HeaderComponents } from '../../zara/components/HeaderComponents'
+import { ProductCartComponents } from '../../zara/components/ProductCartComponents'
 type Pages = {
 	registrationPage: RegistrationPage
 	basketPage: BasketPage
