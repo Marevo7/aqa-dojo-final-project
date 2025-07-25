@@ -21,7 +21,7 @@ test(
 		const startPage = new StartPage(page)
 		await setupStealth(page)
 		await page.goto('https://www.zara.com')
-		await startPage.acceptCookies()
+		//await startPage.acceptCookies()
 		await startPage.goToStore()
 		await headerComponent.goToSearchButton.click()
 		await page.waitForTimeout(2000)
