@@ -1,5 +1,5 @@
 import { test } from './fixtures/baseFixture'
-import { Locator, expect } from '@playwright/test'
+import { Locator, expect, BrowserContext } from '@playwright/test'
 import { setupStealth } from '../utils/stealth-utils'
 
 test(
@@ -17,6 +17,8 @@ test(
 	}) => {
 		await setupStealth(page)
 		await page.goto('/')
+		await page.selectOption('select[name="selectedStore"]', 'ua')
+		await page.selectOption('select[name="selectedLanguage"]', 'en')
 		//await startPage.acceptCookies()
 		await test.step('Open start page and go to search page', async () => {
 			await startPage.goToStore()
@@ -100,3 +102,5 @@ test(
 		})
 	}
 )
+
+//div.register - button - container
