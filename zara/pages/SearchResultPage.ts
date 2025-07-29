@@ -41,7 +41,7 @@ export class SearchResultPage {
 			'button[data-qa-action="add-to-wishlist"]'
 		)
 		this.productAddedModalWindowCloseButton = page.locator(
-			'button[aria-label="close"]'
+			'button.zds-dialog-icon-button.zds-dialog-close-button.zds-drawer-close-button'
 		)
 	}
 	async openFilters() {
