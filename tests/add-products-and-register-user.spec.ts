@@ -17,8 +17,8 @@ test(
 	}) => {
 		await setupStealth(page)
 		await page.goto('/')
-		await page.selectOption('select[name="selectedStore"]', 'ua')
-		await page.selectOption('select[name="selectedLanguage"]', 'en')
+		await startPage.selectCountry(page, 'ua')
+		await startPage.selectLanguage(page, 'en')
 		await test.step('Open start page and go to search page', async () => {
 			await startPage.goToStore()
 			await headerComponents.goToSearchButton.click()

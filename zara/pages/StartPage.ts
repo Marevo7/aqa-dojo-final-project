@@ -23,4 +23,10 @@ export class StartPage {
 	async goToStore() {
 		await this.continueButton.click()
 	}
+	async selectCountry(page: Page, countryCode: string) {
+		await page.selectOption('select[name="selectedStore"]', countryCode)
+	}
+	async selectLanguage(page: Page, languageCode: string) {
+		await page.selectOption('select[name="selectedLanguage"]', languageCode)
+	}
 }

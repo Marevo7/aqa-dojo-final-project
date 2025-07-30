@@ -23,10 +23,15 @@ type Pages = {
 
 export const test = base.extend<Pages>({
 	storageState: async ({ browser }, use) => {
+		if (process.env.CREATE_STORAGE !== 'true') {
+			await use(undefined)
+			return
+		}
+
 		if (!fs.existsSync(storageStatePath)) {
 			const context = await browser.newContext()
 			const page = await context.newPage()
-			await page.goto('/')
+			await page.goto('https://www.zara.com')
 			const startPage = new StartPage(page)
 			await startPage.acceptCookies()
 			await context.storageState({ path: storageStatePath })
