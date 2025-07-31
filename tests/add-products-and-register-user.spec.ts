@@ -78,26 +78,18 @@ test(
 				registrationPage.firstNameInput,
 				registrationPage.lastNameInput,
 			]
-			const formInputErrors: Locator[] = [
-				registrationPage.emailInputError,
-				registrationPage.passwordInputError,
-				registrationPage.firstNameInputError,
-				registrationPage.passwordInputError,
-			]
 			for (const input of registrationInputs) {
 				await input.click()
+				await page.click('body', { position: { x: 0, y: 0 } })
 			}
-			for (const error of formInputErrors) {
-				await expect(error).toBeVisible()
-			}
+			expect(registrationPage.inputError).toHaveCount(4)
 			for (const input of registrationInputs) {
 				await input.fill(
 					'testtesttesttesttesttesttesttesttesttesttesttesttesttesttest60'
 				)
+				await page.click('body', { position: { x: 0, y: 0 } })
 			}
-			for (const error of formInputErrors) {
-				await expect(error).toBeVisible()
-			}
+			expect(registrationPage.inputError).toHaveCount(4)
 		})
 	}
 )
