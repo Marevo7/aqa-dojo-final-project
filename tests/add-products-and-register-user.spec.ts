@@ -5,18 +5,27 @@ import { setupStealth } from '../utils/stealth-utils'
 test(
 	'Add some products to basket and try to create new user',
 	{ tag: '@medium level' },
-	async ({
-		page,
-		registrationPage,
-		basketPage,
-		startPage,
-		searchResultPage,
-		searchComponents,
-		headerComponents,
-		productCartComponents,
-	}) => {
+	async (
+		{
+			page,
+			registrationPage,
+			basketPage,
+			startPage,
+			searchResultPage,
+			searchComponents,
+			headerComponents,
+			productCartComponents,
+		},
+		testInfo
+	) => {
 		await setupStealth(page)
 		await page.goto('/')
+		if (
+			testInfo.project.name === 'webkit' ||
+			testInfo.project.name === 'firefox'
+		) {
+			await startPage.acceptCookies()
+		}
 		await startPage.selectCountry(page, 'ua')
 		await startPage.selectLanguage(page, 'en')
 		await test.step('Open start page and go to search page', async () => {
@@ -32,9 +41,7 @@ test(
 		})
 
 		await test.step('Add all available sizes of 1 product to a basket', async () => {
-			for (let i = 0; i < 3; i++) {
-				await searchResultPage.addToBasketButton.nth(1).click()
-			}
+			await searchResultPage.clickUntilSizeInStockAppears(productCartComponents)
 			await page.waitForTimeout(2000)
 
 			const sizes = await productCartComponents.sizeInStock.all()
@@ -58,7 +65,7 @@ test(
 
 		await test.step('Go to basket and remove every 2nd product', async () => {
 			await headerComponents.basket.click()
-			await page.waitForTimeout(2000)
+			await page.waitForTimeout(1000)
 			const removeButtons = basketPage.productQtyDecrease
 			const count = await removeButtons.count()
 			for (let i = count - 1; i >= 0; i--) {
@@ -89,6 +96,7 @@ test(
 				)
 				await page.click('body', { position: { x: 0, y: 0 } })
 			}
+
 			expect(registrationPage.inputError).toHaveCount(4)
 		})
 	}

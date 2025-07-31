@@ -1,8 +1,10 @@
 import { test, expect, Locator, Page } from '@playwright/test'
 import { SearchComponent } from '../components/SearchComponent'
+import { ProductCartComponents } from '../components/ProductCartComponents'
 
 export class SearchResultPage {
 	page: Page
+	productCartComponents: ProductCartComponents
 	searchComponents: SearchComponent
 	productCards: Locator
 	productTitle: Locator
@@ -75,5 +77,22 @@ export class SearchResultPage {
 	}
 	async closeModalProductAddedToBasket() {
 		await this.productAddedModalWindowCloseButton.click()
+	}
+	async clickUntilSizeInStockAppears(
+		productCartComponents: ProductCartComponents
+	) {
+		let isVisible = false
+		let attempts = 0
+		const maxAttempts = 10
+		while (!isVisible && attempts < maxAttempts) {
+			await this.addToBasketButton.nth(1).click()
+			isVisible = await productCartComponents.sizeInStock
+				.isVisible()
+				.then(() => true)
+				.catch(() => false)
+
+			console.log('sizeInStock visible:', isVisible)
+			attempts++
+		}
 	}
 }
