@@ -12,6 +12,10 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+	timeout: 90000, // Общий таймаут теста (увеличен для CI)
+	expect: {
+		timeout: 15000, // Таймаут для expect
+	},
 	testDir: './tests',
 	/* Run tests in files in parallel */
 	fullyParallel: true,
@@ -25,6 +29,8 @@ export default defineConfig({
 	reporter: 'html',
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
+		actionTimeout: 30000,
+		navigationTimeout: 45000,
 		/* Base URL to use in actions like `await page.goto('/')`. */
 		baseURL: 'https://www.zara.com',
 
@@ -129,13 +135,16 @@ export default defineConfig({
 					'Upgrade-Insecure-Requests': '1',
 				},
 				launchOptions: {
-					args: [
-						// Некоторые флаги Chromium не поддерживаются, оставлены только валидные
-						'--no-sandbox',
-						'--disable-dev-shm-usage',
-						'--mute-audio',
-						'--autoplay-policy=user-gesture-required',
-					],
+					firefoxUserPrefs: {
+						'app.update.enabled': false,
+						'app.update.auto': false,
+						'dom.webnotifications.enabled': false,
+						'geo.enabled': false,
+						'browser.startup.homepage': 'about:blank',
+						'startup.homepage_welcome_url': 'about:blank',
+						'startup.homepage_welcome_url.additional': 'about:blank',
+					},
+					args: [],
 				},
 			},
 		},
@@ -158,16 +167,7 @@ export default defineConfig({
 					'Upgrade-Insecure-Requests': '1',
 				},
 				launchOptions: {
-					args: [
-						'--disable-dev-shm-usage',
-						'--autoplay-policy=user-gesture-required',
-						'--disable-background-timer-throttling',
-						'--mute-audio',
-						'--no-default-browser-check',
-						'--disable-sync',
-						'--metrics-recording-only',
-						'--no-report-upload',
-					],
+					args: [],
 				},
 			},
 		},
